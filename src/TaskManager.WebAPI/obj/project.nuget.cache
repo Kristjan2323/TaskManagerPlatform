@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "/99RhrdKCIs=",
+  "dgSpecHash": "Mfcek0UIg0k=",
   "success": true,
   "projectFilePath": "/Users/admin/Documents/GitHub/TaskManagerPlatform/src/TaskManager.WebAPI/TaskManager.WebAPI.csproj",
   "expectedPackageFiles": [
     "/Users/admin/.nuget/packages/microsoft.aspnetcore.openapi/9.0.10/microsoft.aspnetcore.openapi.9.0.10.nupkg.sha512",
-    "/Users/admin/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512"
+    "/Users/admin/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512",
+    "/Users/admin/.nuget/packages/scalar.aspnetcore/2.11.10/scalar.aspnetcore.2.11.10.nupkg.sha512"
   ],
   "logs": []
 }

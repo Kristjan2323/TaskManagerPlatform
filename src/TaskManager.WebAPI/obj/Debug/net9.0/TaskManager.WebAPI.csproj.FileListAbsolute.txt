@@ -31,3 +31,4 @@
 /Users/admin/Documents/GitHub/TaskManagerPlatform/src/TaskManager.WebAPI/obj/Debug/net9.0/TaskManager.WebAPI.pdb
 /Users/admin/Documents/GitHub/TaskManagerPlatform/src/TaskManager.WebAPI/obj/Debug/net9.0/TaskManager.WebAPI.genruntimeconfig.cache
 /Users/admin/Documents/GitHub/TaskManagerPlatform/src/TaskManager.WebAPI/obj/Debug/net9.0/ref/TaskManager.WebAPI.dll
+/Users/admin/Documents/GitHub/TaskManagerPlatform/src/TaskManager.WebAPI/bin/Debug/net9.0/Scalar.AspNetCore.dll
