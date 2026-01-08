@@ -7,6 +7,6 @@ public interface ITenantProvider
     Guid? GetTenantId();
     Tenant? GetTenant();
     bool HasTenant();
-    void SetTenant(Guid tenantId);
+    void SetTenant(Guid? tenantId);
     void ClearTenant();
 }
