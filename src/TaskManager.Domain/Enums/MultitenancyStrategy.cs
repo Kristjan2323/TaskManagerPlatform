@@ -1,4 +1,4 @@
-namespace TaskManager.Domain.Entities;
+namespace TaskManager.Domain.Enums;
 
 public enum MultitenancyStrategy
 {

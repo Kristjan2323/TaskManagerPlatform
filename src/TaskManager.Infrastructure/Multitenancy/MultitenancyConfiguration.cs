@@ -1,5 +1,5 @@
 using TaskManager.Domain.Abstractions;
-using TaskManager.Domain.Entities;
+using TaskManager.Domain.Enums;
 
 namespace TaskManager.Infrastructure.Multitenancy;
 

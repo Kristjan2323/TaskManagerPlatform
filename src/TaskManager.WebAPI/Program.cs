@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddControllers();
 
 // Register multitenancy services
 builder.Services.AddScoped<ITenantProvider, TenantProvider>();
@@ -38,42 +39,6 @@ app.UseHttpsRedirection();
 
 // Tenant Middleware
 app.UseMiddleware<TenantResolutionMiddleware>();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast");
-
-app.MapGet("/tenant/current", (ITenantProvider tenantProvider) =>
-    {
-        var tenantId = tenantProvider.GetTenantId();
-    
-        if (tenantId.HasValue)
-        {
-            return Results.Ok(new { TenantId = tenantId.Value, Message = "Tenant resolved successfully" });
-        }
-    
-        return Results.BadRequest(new { Message = "No tenant found in request" });
-    })
-    .WithName("GetCurrentTenant");
+app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
