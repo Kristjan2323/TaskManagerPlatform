@@ -15,13 +15,15 @@ public class TenantResolutionMiddleware
     public async Task InvokeAsync(HttpContext httpContext, ITenantResolver tenantResolver, ITenantProvider tenantProvider)
     {
         var tenantId = await tenantResolver.ResolveTenantIdAsync(httpContext);
+        
         if (tenantId.HasValue)
         {
             tenantProvider.SetTenant(tenantId.Value);
         }
         else
         {
-            ///TODO no tenant found
+            httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+            return;
         }
         await _next(httpContext);
     }

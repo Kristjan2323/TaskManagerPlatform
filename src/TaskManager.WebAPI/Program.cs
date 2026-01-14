@@ -1,7 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using TaskManager.Domain.Abstractions;
 using TaskManager.Infrastructure.Abstractions;
 using TaskManager.Infrastructure.Multitenancy;
+using TaskManager.Infrastructure.Presistence;
 using TaskManager.WebAPI.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,12 @@ builder.Services.AddControllers();
 // Register multitenancy services
 builder.Services.AddScoped<ITenantProvider, TenantProvider>();
 builder.Services.AddScoped<ITenantResolver, TenantResolver>();
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
 builder.Services.AddSingleton<IMultitenancyConfiguration>(serviceProvider =>
 {
     var configuration = new MultitenancyConfiguration
