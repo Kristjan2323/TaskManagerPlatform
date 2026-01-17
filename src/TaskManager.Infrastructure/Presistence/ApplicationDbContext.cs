@@ -1,10 +1,12 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TaskManager.Domain.Abstractions;
 using TaskManager.Domain.Entities;
 
 namespace TaskManager.Infrastructure.Presistence;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
 {
     private readonly ITenantProvider _tenantProvider;
 
@@ -25,6 +27,8 @@ public class ApplicationDbContext : DbContext
             .HasQueryFilter(t => true);
         
         // Other entities should be filtered by tenantId
+        // modelBuilder.Entity<ApplicationUser>()
+        //     .HasQueryFilter((u => u.TenantId == _tenantProvider.GetTenantId()));
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
