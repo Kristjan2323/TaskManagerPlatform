@@ -4,4 +4,6 @@ public class Tenant : BaseEntity
 {
     public string Name { get; set; }
     public bool isActive { get; set; }
+    public ICollection<ApplicationUser> Users { get; set; } = new List<ApplicationUser>();
+
 }

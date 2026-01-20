@@ -25,10 +25,16 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
         // Tenant itself should not be filtered by Id
         modelBuilder.Entity<Tenant>()
             .HasQueryFilter(t => true);
-        
+
         // Other entities should be filtered by tenantId
         // modelBuilder.Entity<ApplicationUser>()
         //     .HasQueryFilter((u => u.TenantId == _tenantProvider.GetTenantId()));
+
+         modelBuilder.Entity<ApplicationUser>()
+        .HasOne(u => u.Tenant)
+        .WithMany(t => t.Users)
+        .HasForeignKey(u => u.TenantId)
+        .OnDelete(DeleteBehavior.Restrict);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
