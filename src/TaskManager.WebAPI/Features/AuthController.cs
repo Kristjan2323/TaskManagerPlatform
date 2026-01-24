@@ -1,6 +1,7 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using TaskManager.Application.Features.Auth.DTOs;
 using TaskManager.Application.Features.Auth.Services;
 
 namespace TaskManager.WebAPI.Features
@@ -15,15 +16,27 @@ namespace TaskManager.WebAPI.Features
         {
             _identityService = identityService;
         }
+
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
-            return await Task.FromResult((ActionResult)new OkObjectResult(loginRequest));
+            var result = await _identityService.LoginAsync(loginRequest);
+            return Ok(result);
         }
 
-        public async Task<IActionResult> RegisterUser(RegisterRequest registerRequest)
+        [HttpPost("register")]
+        public async Task<IActionResult> RegisterUser([FromBody] CreateUserDto registerRequest)
         {
-            return await _identityService.RegisterUserAsync(registerRequest)
+            var result = await _identityService.RegisterUserAsync(registerRequest);
+            return Ok(result);
         }
 
+        [HttpPost("tenant")]
+        [Authorize(Roles = "SuperAdmin")]
+        public async Task<IActionResult> CreateTenant([FromBody] CreateTenantDto createTenantDto)
+        {
+            var result = await _identityService.CreateTenantAsync(createTenantDto);
+            return Ok(result);
+        }
     }
 }

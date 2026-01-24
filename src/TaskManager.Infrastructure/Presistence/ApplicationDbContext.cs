@@ -34,19 +34,24 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
         .HasOne(u => u.Tenant)
         .WithMany(t => t.Users)
         .HasForeignKey(u => u.TenantId)
-        .OnDelete(DeleteBehavior.Restrict);
+        .OnDelete(DeleteBehavior.Restrict)
+        .IsRequired(false);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var tenantId = _tenantProvider.GetTenantId();
-        if(!tenantId.HasValue) throw new InvalidOperationException("Tenant not found");
+
         foreach (var entery in ChangeTracker.Entries<BaseEntity>())
         {
             if (entery.State == EntityState.Added)
             {
                 if (entery.Entity is not Tenant)
                 {
+                    // Require tenant for non-Tenant entities
+                    if (!tenantId.HasValue)
+                        throw new InvalidOperationException("Tenant not found");
+
                     entery.Entity.TenantId = tenantId.Value;
                 }
 

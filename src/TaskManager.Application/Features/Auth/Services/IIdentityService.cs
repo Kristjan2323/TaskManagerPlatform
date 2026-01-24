@@ -4,6 +4,7 @@ namespace TaskManager.Application.Features.Auth.Services;
 
 public interface IIdentityService
 {
-    public UserDto LoginAsync(LoginRequest loginRequest);
+    public Task<LoginResponseDto> LoginAsync(LoginRequest loginRequest);
     public Task<CreateUserResponseDto> RegisterUserAsync (CreateUserDto registerRequest);
+    public Task<CreateTenantResponseDto> CreateTenantAsync(CreateTenantDto createTenantDto);
 }
