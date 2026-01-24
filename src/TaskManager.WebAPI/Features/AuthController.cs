@@ -9,13 +9,21 @@ namespace TaskManager.WebAPI.Features
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly IIdentityService _identityService;
+
         public AuthController(IIdentityService identityService)
         {
-            
+            _identityService = identityService;
         }
         public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
-            return await  Task.FromResult((ActionResult)new OkObjectResult(loginRequest));
+            return await Task.FromResult((ActionResult)new OkObjectResult(loginRequest));
         }
+
+        public async Task<IActionResult> RegisterUser(RegisterRequest registerRequest)
+        {
+            return await _identityService.RegisterUserAsync(registerRequest)
+        }
+
     }
 }

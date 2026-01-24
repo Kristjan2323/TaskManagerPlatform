@@ -4,11 +4,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using TaskManager.Application.Features.Auth.Services;
 using TaskManager.Domain.Abstractions;
 using TaskManager.Domain.Entities;
 using TaskManager.Infrastructure.Abstractions;
 using TaskManager.Infrastructure.Multitenancy;
 using TaskManager.Infrastructure.Presistence;
+using TaskManager.Infrastructure.Services;
 using TaskManager.WebAPI.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +23,7 @@ builder.Services.AddControllers();
 // Register multitenancy services
 builder.Services.AddScoped<ITenantProvider, TenantProvider>();
 builder.Services.AddScoped<ITenantResolver, TenantResolver>();
+builder.Services.AddScoped<IIdentityService, IdentityService>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
